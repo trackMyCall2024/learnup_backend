@@ -3,47 +3,72 @@ import mongoose, { HydratedDocument } from "mongoose";
 
 export type UserDocument = HydratedDocument<User>;
 
-export enum SubscriptionName {
-    SALES_STARTER = "salesStarter",
-    SALES_COACH = "salesCoach",
-    SALES_MASTER = "salesMaster",
-}
-
-export interface Subscription {
-    type: "yearly" | "monthly";
-    name: SubscriptionName;
-    expiration: number;
-    active: boolean;
-}
-
 export enum Role {
     Admin = "admin",
-    User = "user",
-    Employee = "employee",
+    User = "user"
+}
+
+@Schema()
+export class Subscription {
+    @Prop({ type: String, enum: ["freemium", "smart+", "smart_premium"], required: true })
+    name: "freemium" | "smart+" | "smart_premium";
+
+    @Prop({ type: Boolean, required: true })
+    isActivate: boolean;
+}
+
+@Schema()
+export class University {
+    @Prop({ type: String, required: true })
+    name: string;
+
+    @Prop({ type: String, required: true })
+    educationName: string;
+
+    @Prop({ type: String, required: true })
+    educationLevel: string;
+}
+
+@Schema()
+export class Location {
+    @Prop({ type: String, required: true })
+    country: string;
+
+    @Prop({ type: String, required: true })
+    city: string;
 }
 
 @Schema()
 export class User {
     @Prop({ type: mongoose.Schema.Types.ObjectId, auto: true })
-    _id?: mongoose.Schema.Types.ObjectId;
+    _id: mongoose.Schema.Types.ObjectId;
 
-    @Prop({ type: String, isRequired: true })
+    @Prop({ type: String, required: true })
     email: string;
 
-    @Prop({ type: String, isRequired: true })
+    @Prop({ type: String, required: true })
     firstname: string;
 
-    @Prop({ type: String, isRequired: true })
+    @Prop({ type: String, required: true })
     lastname: string;
 
-    @Prop({ type: Object, isRequired: false })
-    subscription?: Subscription;
+    @Prop({ type: Number, required: false })
+    age: number;
 
-    @Prop({ type: Date, isRequired: true })
-    registrationDate: Date;
+    @Prop({ type: String, enum: [Role.User, Role.Admin], required: true })
+    role: "user" | "admin";
 
-    @Prop({ type: String, enum: Role, isRequired: true })
-    role: Role;
+    @Prop({ type: Subscription, required: true })
+    sub: Subscription;
+
+    @Prop({ type: University, required: false })
+    university: University;
+
+    @Prop({ type: Location, required: false })
+    location: Location;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+export const SubscriptionSchema = SchemaFactory.createForClass(Subscription);
+export const UniversitySchema = SchemaFactory.createForClass(University);
+export const LocationSchema = SchemaFactory.createForClass(Location);

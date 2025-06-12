@@ -1,6 +1,5 @@
 import { Connection } from "mongoose";
 import { UserService } from "src/user/user.service";
-import { User } from "src/user/user.schema";
 import { LoggerService } from "src/logger/logger.service";
 export declare class AppController {
     private readonly userService;
@@ -10,5 +9,9 @@ export declare class AppController {
     getStatus(): {
         status: string;
     };
-    getUser(userData: any): Promise<User>;
+    getUser(userData: any): Promise<import("mongoose").Document<unknown, {}, import("../user/user.schema").User> & import("../user/user.schema").User & Required<{
+        _id: import("mongoose").Schema.Types.ObjectId;
+    }> & {
+        __v: number;
+    }>;
 }

@@ -12,21 +12,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserSchema = exports.User = exports.Role = exports.SubscriptionName = void 0;
+exports.LocationSchema = exports.UniversitySchema = exports.SubscriptionSchema = exports.UserSchema = exports.User = exports.Location = exports.University = exports.Subscription = exports.Role = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = __importDefault(require("mongoose"));
-var SubscriptionName;
-(function (SubscriptionName) {
-    SubscriptionName["SALES_STARTER"] = "salesStarter";
-    SubscriptionName["SALES_COACH"] = "salesCoach";
-    SubscriptionName["SALES_MASTER"] = "salesMaster";
-})(SubscriptionName || (exports.SubscriptionName = SubscriptionName = {}));
 var Role;
 (function (Role) {
     Role["Admin"] = "admin";
     Role["User"] = "user";
-    Role["Employee"] = "employee";
 })(Role || (exports.Role = Role = {}));
+let Subscription = class Subscription {
+};
+exports.Subscription = Subscription;
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, enum: ["freemium", "smart+", "smart_premium"], required: true }),
+    __metadata("design:type", String)
+], Subscription.prototype, "name", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, required: true }),
+    __metadata("design:type", Boolean)
+], Subscription.prototype, "isActivate", void 0);
+exports.Subscription = Subscription = __decorate([
+    (0, mongoose_1.Schema)()
+], Subscription);
+let University = class University {
+};
+exports.University = University;
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, required: true }),
+    __metadata("design:type", String)
+], University.prototype, "name", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, required: true }),
+    __metadata("design:type", String)
+], University.prototype, "educationName", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, required: true }),
+    __metadata("design:type", String)
+], University.prototype, "educationLevel", void 0);
+exports.University = University = __decorate([
+    (0, mongoose_1.Schema)()
+], University);
+let Location = class Location {
+};
+exports.Location = Location;
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, required: true }),
+    __metadata("design:type", String)
+], Location.prototype, "country", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, required: true }),
+    __metadata("design:type", String)
+], Location.prototype, "city", void 0);
+exports.Location = Location = __decorate([
+    (0, mongoose_1.Schema)()
+], Location);
 let User = class User {
 };
 exports.User = User;
@@ -35,31 +74,42 @@ __decorate([
     __metadata("design:type", mongoose_2.default.Schema.Types.ObjectId)
 ], User.prototype, "_id", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, isRequired: true }),
+    (0, mongoose_1.Prop)({ type: String, required: true }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, isRequired: true }),
+    (0, mongoose_1.Prop)({ type: String, required: true }),
     __metadata("design:type", String)
 ], User.prototype, "firstname", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, isRequired: true }),
+    (0, mongoose_1.Prop)({ type: String, required: true }),
     __metadata("design:type", String)
 ], User.prototype, "lastname", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: Object, isRequired: false }),
-    __metadata("design:type", Object)
-], User.prototype, "subscription", void 0);
+    (0, mongoose_1.Prop)({ type: Number, required: false }),
+    __metadata("design:type", Number)
+], User.prototype, "age", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: Date, isRequired: true }),
-    __metadata("design:type", Date)
-], User.prototype, "registrationDate", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: String, enum: Role, isRequired: true }),
+    (0, mongoose_1.Prop)({ type: String, enum: [Role.User, Role.Admin], required: true }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Subscription, required: true }),
+    __metadata("design:type", Subscription)
+], User.prototype, "sub", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: University, required: false }),
+    __metadata("design:type", University)
+], User.prototype, "university", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Location, required: false }),
+    __metadata("design:type", Location)
+], User.prototype, "location", void 0);
 exports.User = User = __decorate([
     (0, mongoose_1.Schema)()
 ], User);
 exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
+exports.SubscriptionSchema = mongoose_1.SchemaFactory.createForClass(Subscription);
+exports.UniversitySchema = mongoose_1.SchemaFactory.createForClass(University);
+exports.LocationSchema = mongoose_1.SchemaFactory.createForClass(Location);
 //# sourceMappingURL=user.schema.js.map

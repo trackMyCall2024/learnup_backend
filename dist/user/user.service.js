@@ -22,20 +22,25 @@ let UserService = class UserService {
         this.userModel = userModel;
     }
     async getUserByEmail(email) {
-        return await this.userModel.findOne({ email });
+        return this.userModel.findOne({ email }).exec();
     }
-    async getUserByToken(token) {
-        return await this.userModel.findOne({ token });
+    async createUser(userData) {
+        const newUser = new this.userModel(userData);
+        return newUser.save();
     }
-    async createUser(user) {
-        const newUser = await this.userModel.create(user);
+    async updateUserByEmail(email, updateData) {
+        const updatedUser = await this.userModel.findOneAndUpdate({ email }, { $set: updateData }, { new: true, runValidators: true });
+        if (!updatedUser) {
+            throw new common_1.NotFoundException(`User with email ${email} not found.`);
+        }
+        return updatedUser;
     }
-    async putUser(user) {
-        await this.userModel.findOneAndUpdate({ email: user.email }, user);
+    async deleteUserByEmail(email) {
+        const result = await this.userModel.deleteOne({ email }).exec();
+        return result.deletedCount > 0;
     }
     async doesUserAlreadyExist(email) {
-        const user = await this.userModel.findOne({ email });
-        console.log('User db', user, !!user);
+        const user = await this.userModel.exists({ email });
         return !!user;
     }
 };
