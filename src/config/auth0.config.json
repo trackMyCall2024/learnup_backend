@@ -1,0 +1,6 @@
+{
+    "AUTH0_DOMAIN": "dev-gied5dxzv0v4e4pa.us.auth0.com",
+    "AUTH0_CLIENT_ID": "yWNCEWZrI8HjIpUnGMoYfz9nWKrzsMee",
+    "AUTH0_CLIENT_SECRET": "FcITcvkpvCNtOLqKf7vg6ormLDQ-Q9-jotEM939va_QKooJQwNAtA0gcgkhfe3D4",
+    "BASE_URL": "http://localhost:3000"
+}
