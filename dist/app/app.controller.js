@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("mongoose");
 const mongoose_2 = require("@nestjs/mongoose");
 const user_service_1 = require("../user/user.service");
-const user_schema_1 = require("../user/user.schema");
 const jwt_auth_guard_1 = require("../authentification/jwt-auth.guard");
 const logger_service_1 = require("../logger/logger.service");
 let AppController = class AppController {
@@ -39,15 +38,6 @@ let AppController = class AppController {
         const doesUserAlreadyExist = await this.userService.doesUserAlreadyExist(userData?.email);
         if (!doesUserAlreadyExist) {
             this.loggerService.debug("no user");
-            const user = {
-                email: userData.email,
-                firstname: userData.given_name,
-                lastname: userData.family_name,
-                subscription: null,
-                registrationDate: new Date(),
-                role: user_schema_1.Role.User,
-            };
-            await this.userService.createUser(user);
             return;
         }
         const user = await this.userService.getUserByEmail(userData?.email);

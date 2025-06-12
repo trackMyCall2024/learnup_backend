@@ -17,7 +17,6 @@ import {
 import { Connection } from "mongoose";
 import { InjectConnection } from "@nestjs/mongoose";
 import { UserService } from "src/user/user.service";
-import { Role, User } from "src/user/user.schema";
 import { JwtAuthGuard } from "src/authentification/jwt-auth.guard";
 import { LoggerService } from "src/logger/logger.service";
 
@@ -52,16 +51,9 @@ export class AppController {
         if (!doesUserAlreadyExist) {
             this.loggerService.debug("no user");
 
-            const user: User = {
-                email: userData.email,
-                firstname: userData.given_name,
-                lastname: userData.family_name,
-                subscription: null,
-                registrationDate: new Date(),
-                role: Role.User,
-            };
+            // const user: User = {};
 
-            await this.userService.createUser(user);
+            // await this.userService.createUser(user);
 
             return
         }

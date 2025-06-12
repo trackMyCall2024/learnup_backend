@@ -1,0 +1,43 @@
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { Section, SectionDocument } from "./section.schema";
+
+@Injectable()
+export class SectionService {
+    constructor(
+        @InjectModel(Section.name) private readonly sectionModel: Model<SectionDocument>,
+    ) {}
+
+    async createSection(data: Partial<Section>): Promise<SectionDocument> {
+        const newSection = new this.sectionModel(data);
+        return newSection.save();
+    }
+
+    async getSectionsPaginated(page = 1, limit = 20): Promise<{ sections: SectionDocument[]; hasMore: boolean }> {
+        const skip = (page - 1) * limit;
+        const sections = await this.sectionModel.find().skip(skip).limit(limit).exec();
+        const countTotal = await this.sectionModel.countDocuments().exec();
+        const hasMore = skip + sections.length < countTotal;
+
+        return { sections, hasMore };
+    }
+
+    async updateSection(id: string, updateData: Partial<Section>): Promise<SectionDocument> {
+        const updated = await this.sectionModel.findByIdAndUpdate(id, updateData, {
+            new: true,
+            runValidators: true,
+        });
+
+        if (!updated) {
+            throw new NotFoundException("Section not found")
+        };
+
+        return updated;
+    }
+
+    async deleteSection(id: string): Promise<boolean> {
+        const result = await this.sectionModel.deleteOne({ _id: id }).exec();
+        return result.deletedCount > 0;
+    }
+}
