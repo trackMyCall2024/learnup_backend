@@ -11,7 +11,7 @@ export declare class Subscription {
 export declare class University {
     name: string;
     educationName: string;
-    educationLevel: string;
+    educationLevel: number;
 }
 export declare class Location {
     country: string;

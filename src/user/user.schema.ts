@@ -25,8 +25,8 @@ export class University {
     @Prop({ type: String, required: true })
     educationName: string;
 
-    @Prop({ type: String, required: true })
-    educationLevel: string;
+    @Prop({ type: Number, required: true })
+    educationLevel: number;
 }
 
 @Schema()

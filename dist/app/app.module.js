@@ -17,6 +17,13 @@ const passport_1 = require("@nestjs/passport");
 const session_serializer_1 = require("../session.serializer");
 const jwt_strategy_1 = require("../authentification/jwt.strategy");
 const logger_module_1 = require("../logger/logger.module");
+const course_module_1 = require("../course/course.module");
+const chapter_module_1 = require("../chapter/chapter.module");
+const section_module_1 = require("../section/section.module");
+const blocker_module_1 = require("../blocker/blocker.module");
+const friend_module_1 = require("../friend/friend.module");
+const history_module_1 = require("../history/history.module");
+const settings_module_1 = require("../settings/settings.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -29,6 +36,13 @@ exports.AppModule = AppModule = __decorate([
             }),
             mongoose_1.MongooseModule.forRoot(`mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.aa07acy.mongodb.net/?retryWrites=true&w=majority&appName=${process.env.APP_NAME}`),
             user_module_1.UserModule,
+            course_module_1.CourseModule,
+            chapter_module_1.ChapterModule,
+            section_module_1.SectionModule,
+            blocker_module_1.BlockerModule,
+            friend_module_1.FriendModule,
+            history_module_1.HistoryModule,
+            settings_module_1.SettingsModule,
             logger_module_1.LoggerModule,
             passport_1.PassportModule.register({ session: true })
         ],

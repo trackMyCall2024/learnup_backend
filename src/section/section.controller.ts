@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Param, Query, Put, Delete } from "@nestjs/common";
-import { SectionService } from "./section.service";
-import { Section } from "./section.schema";
+import { Controller, Get, Post, Body, Param, Query, Put, Delete } from '@nestjs/common';
+import { SectionService } from './section.service';
+import { Section } from './section.schema';
 
-@Controller("section")
+@Controller('section')
 export class SectionController {
     constructor(private readonly sectionService: SectionService) {}
 
@@ -11,35 +11,45 @@ export class SectionController {
         return this.sectionService.createSection(sectionData);
     }
 
-    @Get()
-    async getPaginated(@Query("page") page: string) {
-        const pageNum = parseInt(page) || 1;
-        return this.sectionService.getSectionsPaginated(pageNum);
+    @Post('all')
+    async createBulk(@Body() sectionData: Partial<Section[]>) {
+
+        for(const section of sectionData) {
+            await this.sectionService.createSection(section);
+        }
+
+        return 'ok';
     }
 
-    @Put(":id")
-    async update(@Param("id") id: string, @Body() updateData: Partial<Section>) {
+    @Get(':id')
+    async getPaginated(
+        @Param('id') chapterId: string,
+        @Query('page') page: string,
+        @Query('search') search: string,
+    ) {
+        const pageNum = parseInt(page) || 1;
+        return this.sectionService.getSectionsPaginated(chapterId, search, pageNum);
+    }
+
+    @Put(':id')
+    async update(@Param('id') id: string, @Body() updateData: Partial<Section>) {
         return this.sectionService.updateSection(id, updateData);
     }
-    
-    @Delete(":id")
-    async remove(@Param("id") id: string) {
+
+    @Delete(':id')
+    async remove(@Param('id') id: string) {
         return this.sectionService.deleteSection(id);
     }
-    
-    @Post("talk")
-    async talk(@Body("section") { message, sectionId } : { message: string, sectionId: string }) {
+
+    @Post('talk')
+    async talk(@Body('section') { message, sectionId }: { message: string; sectionId: string }) {
         // configurer l'ia
-            // Si c'est une nouvelle section -> précise d'oublier tout ce qui est ecrit précédemment et base toi sur le nouveau cours
-
+        // Si c'est une nouvelle section -> précise d'oublier tout ce qui est ecrit précédemment et base toi sur le nouveau cours
         // envoyé le message à l'ia
-
         // recupérer la réponse
-            // renvoyer par petit bout
-
-        // Update la section chat 
+        // renvoyer par petit bout
+        // Update la section chat
         // Une fois finit renvoie un signal pour dire que c'est fini l'ia à fini de répondre
-
         // Si une erreur se produit renvoie une alerte erreur -> ressaie coté front
     }
 }

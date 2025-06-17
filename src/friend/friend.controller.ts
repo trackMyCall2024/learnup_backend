@@ -11,18 +11,18 @@ export class FriendController {
         return this.friendService.createFriendList(data);
     }
 
-    @Get(":userId")
-    async getList(@Param("userId") userId: string) {
+    @Get(":id")
+    async getList(@Param("id") userId: string) {
         return this.friendService.getFriendList(userId);
     }
 
-    @Put(":userId")
-    async update(@Param("userId") userId: string, @Body("friends") friendIds: string[]) {
+    @Put(":id")
+    async update(@Param("id") userId: string, @Body("friends") friendIds: string[]) {
         return this.friendService.updateFriendList(userId, friendIds);
     }
 
-    @Delete(":userId")
-    async remove(@Param("userId") userId: string) {
+    @Delete(":id")
+    async remove(@Param("id") userId: string) {
         return this.friendService.deleteFriendList(userId);
     }
 }

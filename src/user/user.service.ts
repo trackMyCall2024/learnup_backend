@@ -38,7 +38,7 @@ export class UserService {
     }
 
     async doesUserAlreadyExist(email: string): Promise<boolean> {
-        const user = await this.userModel.exists({ email });
-        return !!user;
+        const userId = await this.userModel.exists({ email });
+        return !!userId;
     }
 }

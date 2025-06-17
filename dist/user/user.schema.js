@@ -46,8 +46,8 @@ __decorate([
     __metadata("design:type", String)
 ], University.prototype, "educationName", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, required: true }),
-    __metadata("design:type", String)
+    (0, mongoose_1.Prop)({ type: Number, required: true }),
+    __metadata("design:type", Number)
 ], University.prototype, "educationLevel", void 0);
 exports.University = University = __decorate([
     (0, mongoose_1.Schema)()

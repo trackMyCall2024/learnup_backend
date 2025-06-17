@@ -40,8 +40,8 @@ let UserService = class UserService {
         return result.deletedCount > 0;
     }
     async doesUserAlreadyExist(email) {
-        const user = await this.userModel.exists({ email });
-        return !!user;
+        const userId = await this.userModel.exists({ email });
+        return !!userId;
     }
 };
 exports.UserService = UserService;
