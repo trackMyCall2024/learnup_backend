@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Query, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Put, Delete, NotFoundException } from '@nestjs/common';
 import { SectionService } from './section.service';
 import { Section } from './section.schema';
 
@@ -13,8 +13,7 @@ export class SectionController {
 
     @Post('all')
     async createBulk(@Body() sectionData: Partial<Section[]>) {
-
-        for(const section of sectionData) {
+        for (const section of sectionData) {
             await this.sectionService.createSection(section);
         }
 
@@ -29,6 +28,17 @@ export class SectionController {
     ) {
         const pageNum = parseInt(page) || 1;
         return this.sectionService.getSectionsPaginated(chapterId, search, pageNum);
+    }
+
+    @Get('single/:id')
+    async getSection(
+        @Param('id') sectionId: string,
+    ) {
+        if (!sectionId) {
+            throw new NotFoundException('section id is not found');
+        }
+
+        return this.sectionService.getSectionById(sectionId);
     }
 
     @Put(':id')

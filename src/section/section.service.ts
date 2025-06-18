@@ -32,6 +32,18 @@ export class SectionService {
         return { rows, hasMore };
     }
 
+    async getSectionById(
+        sectionId: string,
+    ): Promise<SectionDocument> {
+        const section = await this.sectionModel.findOne({ _id: sectionId });
+
+        if (!section) {
+            throw new NotFoundException('Section not found');
+        }
+
+        return section;
+    }
+
     async updateSection(id: string, updateData: Partial<Section>): Promise<SectionDocument> {
         const updated = await this.sectionModel.findByIdAndUpdate(id, updateData, {
             new: true,

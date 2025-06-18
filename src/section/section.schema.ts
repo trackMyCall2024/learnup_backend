@@ -56,7 +56,7 @@ export class Section {
     @Prop({ type: Content, required: true })
     content: Content;
 
-    @Prop({ type: [ChatMessage], required: false })
+    @Prop({ type: [ChatMessage], required: true, default: [] })
     chat: ChatMessage[];
 }
 
