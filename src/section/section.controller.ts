@@ -51,8 +51,8 @@ export class SectionController {
         return this.sectionService.deleteSection(id);
     }
 
-    @Post('talk')
-    async talk(@Body('section') { message, sectionId }: { message: string; sectionId: string }) {
+    @Post('chat')
+    async chat(@Body('section') { message, sectionId }: { message: string; sectionId: string }) {
         // configurer l'ia
         // Si c'est une nouvelle section -> précise d'oublier tout ce qui est ecrit précédemment et base toi sur le nouveau cours
         // envoyé le message à l'ia
