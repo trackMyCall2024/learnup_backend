@@ -1,32 +1,28 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { User } from '../user/user.schema';
-import { Course } from '../course/course.schema';
-import { Section } from '../section/section.schema';
-import { Chapter } from '../chapter/chapter.schema';
+import { Directory } from '../directory/directory.schema';
 
 export type HistoryDocument = HydratedDocument<History>;
-
-export type HistoryType = 'courses' | 'chapters' | 'sections';
 
 @Schema()
 export class HistoryList {
     @Prop({
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: Course.name }],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: Directory.name }],
         default: [],
         validate: [(arr: any[]) => arr.length <= 4, 'Max 4 courses'],
     })
     courses: mongoose.Schema.Types.ObjectId[];
 
     @Prop({
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: Chapter.name }],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: Directory.name }],
         default: [],
         validate: [(arr: any[]) => arr.length <= 4, 'Max 4 chapters'],
     })
     chapters: mongoose.Schema.Types.ObjectId[];
 
     @Prop({
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: Section.name }],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: Directory.name }],
         default: [],
         validate: [(arr: any[]) => arr.length <= 4, 'Max 4 sections'],
     })

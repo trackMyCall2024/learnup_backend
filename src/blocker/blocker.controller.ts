@@ -16,13 +16,13 @@ export class BlockerController {
         return this.blockerService.getBlocker(userId);
     }
 
-    @Put(":userId")
-    async update(@Param("userId") userId: string, @Body("websites") websites: string[]) {
-        return this.blockerService.updateBlocker(userId, websites);
+    @Put(":website_id")
+    async update(@Param("website_id") websiteId: string, @Body("website") website: string) {
+        return this.blockerService.updateBlocker(websiteId, website);
     }
 
-    @Delete(":userId")
-    async remove(@Param("userId") userId: string) {
-        return this.blockerService.deleteBlocker(userId);
+    @Delete(":website_id")
+    async remove(@Param("website_id") websiteID: string) {
+        return this.blockerService.deleteBlocker(websiteID);
     }
 }
