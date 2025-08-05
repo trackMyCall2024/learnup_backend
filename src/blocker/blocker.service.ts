@@ -14,20 +14,20 @@ export class BlockerService {
         return newBlocker.save();
     }
 
-    async getBlocker(userId: string): Promise<BlockerDocument> {
-        const blocker = await this.blockerModel.findOne({ user: userId }).exec();
+    async getBlocker(userId: string): Promise<BlockerDocument[]> {
+        const blockers = await this.blockerModel.find({ user: userId }).exec();
 
-        if (!blocker) {
+        if (!blockers) {
             throw new NotFoundException("Blocker not found")
         };
         
-        return blocker;
+        return blockers;
     }
 
-    async updateBlocker(userId: string, websites: string[]): Promise<BlockerDocument> {
+    async updateBlocker(websiteId: string, website: string): Promise<BlockerDocument> {
         const updated = await this.blockerModel.findOneAndUpdate(
-        { user: userId },
-        { $set: { websites } },
+        { _id: websiteId },
+        { $set: { website } },
         { new: true, runValidators: true }
         );
 
@@ -38,8 +38,8 @@ export class BlockerService {
         return updated;
     }
 
-    async deleteBlocker(userId: string): Promise<boolean> {
-        const result = await this.blockerModel.deleteOne({ user: userId }).exec();
+    async deleteBlocker(websiteID: string): Promise<boolean> {
+        const result = await this.blockerModel.deleteOne({ _id: websiteID }).exec();
         return result.deletedCount > 0;
     }
 }

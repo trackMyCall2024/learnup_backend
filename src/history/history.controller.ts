@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, Query, NotFoundException } from '@nestjs/common';
 import { HistoryService } from './history.service';
-import { History, HistoryType } from './history.schema';
+import { History } from './history.schema';
+import { DirectoryType } from 'src/directory/directory.schema';
 
 @Controller('history')
 export class HistoryController {
@@ -12,15 +13,15 @@ export class HistoryController {
     }
 
     @Get(':id')
-    async getList(@Param('id') userId: string, @Query('history_type') historyType: HistoryType) {
-        return this.historyService.getHistoryList(userId, historyType);
+    async getList(@Param('id') userId: string, @Query('directory_type') directoryType: DirectoryType) {
+        return this.historyService.getHistoryList(userId, directoryType);
     }
 
     @Put(':id')
     async update(
         @Param('id') userId: string,
         @Body('history_id') historyId: string,
-        @Body('history_type') historyType: HistoryType,
+        @Body('directory_type') directoryType: DirectoryType,
     ) {
         console.log('update history');
 
@@ -28,6 +29,6 @@ export class HistoryController {
             throw new NotFoundException('History id not found');
         }
 
-        return this.historyService.updateHistoryList(userId, historyId, historyType);
+        return this.historyService.updateHistoryList(userId, historyId, directoryType);
     }
 }

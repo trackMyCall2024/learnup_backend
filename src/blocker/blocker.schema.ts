@@ -9,8 +9,8 @@ export class Blocker {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name, required: true })
     user: mongoose.Schema.Types.ObjectId;
 
-    @Prop({ type: [String], default: [] })
-    websites: string[];
+    @Prop({ type: String, default: [] })
+    websites: string;
 }
 
 export const BlockerSchema = SchemaFactory.createForClass(Blocker);

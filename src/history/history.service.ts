@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
-import { History, HistoryDocument, HistoryType } from './history.schema';
+import { History, HistoryDocument } from './history.schema';
+import { DirectoryType } from 'src/directory/directory.schema';
 
 @Injectable()
 export class HistoryService {
@@ -12,23 +13,23 @@ export class HistoryService {
         return newEntry.save();
     }
 
-    async getHistoryList(userId: string, historyType: HistoryType): Promise<any> {
+    async getHistoryList(userId: string, directoryType: DirectoryType): Promise<any> {
         const history = await this.historyModel
             .findOne({ user: userId })
-            .populate(`history.${historyType}`)
+            .populate(`history.${directoryType}`)
             .exec();
 
         if (!history) {
             throw new NotFoundException('History not found');
         }
 
-        return history.history[historyType];
+        return history.history[directoryType];
     }
 
     async updateHistoryList(
         userId: string,
         newItemId: string,
-        historyType: HistoryType,
+        directoryType: DirectoryType,
     ): Promise<HistoryDocument> {
         const historyDoc = await this.historyModel.findOne({ user: userId }).exec();
 
@@ -37,7 +38,7 @@ export class HistoryService {
         }
 
         // Copy data
-        let listId = [...(historyDoc.history[historyType] as ObjectId[])].map((id) =>
+        let listId = [...(historyDoc.history[directoryType] as ObjectId[])].map((id) =>
             id.toString(),
         );
 
@@ -56,7 +57,7 @@ export class HistoryService {
 
         const updated = await this.historyModel.findOneAndUpdate(
             { user: userId },
-            { $set: { [`history.${historyType}`]: listId } },
+            { $set: { [`history.${directoryType}`]: listId } },
             { new: true },
         );
 
