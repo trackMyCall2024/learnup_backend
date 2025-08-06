@@ -7,12 +7,8 @@ import { Model } from 'mongoose';
 export class ChatService {
     constructor(@InjectModel('Chat') private readonly chatModel: Model<ChatDocument>) {}
 
-    async getChat(sectionID: string, pagination: { page: number; limit: number }) {
-        return this.chatModel
-            .find({ section: sectionID })
-            .skip(pagination.page * pagination.limit)
-            .limit(pagination.limit)
-            .exec();
+    async getChat(section_id: string) {
+        return this.chatModel.find({ section: section_id }).exec();
     }
 
     async createChat(newData: ChatDocument) {

@@ -6,9 +6,11 @@ import { NoteDocument } from './note.schema';
 export class NoteController {
     constructor(private readonly noteService: NoteService) {}
 
-    @Get(':sectionID')
-    async getNote(@Param('sectionID') sectionID: string) {
-        return this.noteService.getNote(sectionID);
+    @Get(':section_id')
+    async getNote(@Param('section_id') section_id: string) {
+        const note = await this.noteService.getNote(section_id);
+        console.log('note', note);
+        return note;
     }
 
     @Post()
@@ -16,13 +18,13 @@ export class NoteController {
         return this.noteService.createNote(note);
     }
 
-    @Put(':noteID')
-    async updateNote(@Param('noteID') noteID: string, @Body() newData: NoteDocument) {
-        return this.noteService.updateNote(noteID, newData);
+    @Put(':note_id')
+    async updateNote(@Param('note_id') note_id: string, @Body() newData: NoteDocument) {
+        return this.noteService.updateNote(note_id, newData);
     }
 
-    @Delete(':noteID')
-    async deleteNote(@Param('noteID') noteID: string) {
-        return this.noteService.deleteNote(noteID);
+    @Delete(':note_id')
+    async deleteNote(@Param('note_id') note_id: string) {
+        return this.noteService.deleteNote(note_id);
     }
 }

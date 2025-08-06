@@ -9,14 +9,21 @@ export class DirectoryController {
     @Get()
     async getDirectories(
         @Query('parentID') parentID: string,
+        @Query('search') search: string,
         @Query('type') type: DirectoryType,
-        @Query('pagination') pagination: { page: number; limit: number },
+        @Query('pagination') pagination: number,
+        @Query('limit') limit: number,
     ) {
         if (!parentID || !type || !pagination) {
             throw new BadRequestException('Invalid query parameters');
         }
 
-        return this.directoryService.getDirectories(parentID, type, pagination);
+        return this.directoryService.getDirectories(parentID, type, search, { page: pagination, limit });
+    }
+
+    @Get(':directory_id')
+    async getDirectory(@Param('directory_id') directory_id: string) {
+        return this.directoryService.getDirectory(directory_id);
     }
 
     @Post()
@@ -24,13 +31,13 @@ export class DirectoryController {
         return this.directoryService.createDirectory(newData);
     }
 
-    @Delete(':directoryID')
-    async deleteDirectory(@Param('directoryID') directoryID: string) {
+    @Delete(':directory_id')
+    async deleteDirectory(@Param('directory_id') directory_id: string) {
 
     }
 
-    @Put(':directoryID')
-    async updateDirectory(@Param('directoryID') directoryID: string, @Body() newData: DirectoryDocument) {
-        return this.directoryService.updateDirectory(directoryID, newData);
+    @Put(':directory_id')
+    async updateDirectory(@Param('directory_id') directory_id: string, @Body() newData: DirectoryDocument) {
+        return this.directoryService.updateDirectory(directory_id, newData);
     }
 }

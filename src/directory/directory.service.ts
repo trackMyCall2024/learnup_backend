@@ -12,14 +12,20 @@ export class DirectoryService {
     async getDirectories(
         parentID: string,
         type: DirectoryType,
+        search: string,
         pagination: { page: number; limit: number },
     ) {
         const directories = await this.directoryModel
-            .find({ parentID, type })
-            .skip(pagination.page * pagination.limit)
+            .find({ parentID, type, name: { $regex: search, $options: 'i' } })
+            .skip((pagination.page - 1) * pagination.limit)
             .limit(pagination.limit)
             .exec();
+
         return directories;
+    }
+
+    async getDirectory(directory_id: string) {
+        return this.directoryModel.findById(directory_id).exec();
     }
 
     async getAllDirectoriesIds(parentID: string, type: DirectoryType) {

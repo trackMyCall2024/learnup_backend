@@ -7,8 +7,8 @@ import { Model } from 'mongoose';
 export class ChunkService {
     constructor(@InjectModel('Chunk') private readonly chunkModel: Model<ChunkDocument>) {}
 
-    async getChunk(sectionID: string) {
-        return this.chunkModel.find({ section: sectionID }).exec();
+    async getChunks(pageID: string) {
+        return this.chunkModel.find({ page: pageID }).exec();
     }
 
     async createChunk(newData: ChunkDocument) {

@@ -6,9 +6,9 @@ import { ResumeDocument } from './resume.schema';
 export class ResumeController {
     constructor(private readonly resumeService: ResumeService) {}
 
-    @Get(':sectionID')
-    async getResume(@Param('sectionID') sectionID: string) {
-        return this.resumeService.getResume(sectionID);
+    @Get(':section_id')
+    async getResume(@Param('section_id') section_id: string) {
+        return this.resumeService.getResume(section_id);
     }
 
     @Post()
@@ -16,8 +16,8 @@ export class ResumeController {
         return this.resumeService.createResume(newData);
     }
 
-    @Put(':resumeID')
-    async updateResume(@Param('resumeID') resumeID: string, @Body() newData: ResumeDocument) {
-        return this.resumeService.updateResume(resumeID, newData);
+    @Put(':resume_id')
+    async updateResume(@Param('resume_id') resume_id: string, @Body() newData: ResumeDocument) {
+        return this.resumeService.updateResume(resume_id, newData);
     }   
 }

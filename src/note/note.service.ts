@@ -8,7 +8,7 @@ export class NoteService {
     constructor(@InjectModel('Note') private readonly noteModel: Model<NoteDocument>) {}
 
     async getNote(sectionID: string) {
-        return this.noteModel.find({ section: sectionID }).exec();
+        return this.noteModel.findOne({ section: sectionID }).exec();
     }
 
     async createNote(newData: NoteDocument) {

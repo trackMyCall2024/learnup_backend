@@ -6,9 +6,9 @@ import { ChunkDocument } from './chunk.schema';
 export class ChunkController {
     constructor(private readonly chunkService: ChunkService) {}
 
-    @Get(':sectionID')
-    async getChunk(@Param('sectionID') sectionID: string) {
-        return this.chunkService.getChunk(sectionID);
+    @Get(':page_id')
+    async getChunks(@Param('page_id') page_id: string) {
+        return this.chunkService.getChunks(page_id);
     }
 
     @Post()
@@ -16,13 +16,13 @@ export class ChunkController {
         return this.chunkService.createChunk(chunk);
     }
 
-    @Put(':chunkID')
-    async updateChunk(@Param('chunkID') chunkID: string, @Body() chunk: ChunkDocument) {
-        return this.chunkService.updateChunk(chunkID, chunk);
+    @Put(':chunk_id')
+    async updateChunk(@Param('chunk_id') chunk_id: string, @Body() chunk: ChunkDocument) {
+        return this.chunkService.updateChunk(chunk_id, chunk);
     }
 
-    @Delete(':chunkID')
-    async deleteChunk(@Param('chunkID') chunkID: string) {
-        return this.chunkService.deleteChunk(chunkID);
+    @Delete(':chunk_id')
+    async deleteChunk(@Param('chunk_id') chunk_id: string) {
+        return this.chunkService.deleteChunk(chunk_id);
     }
 }

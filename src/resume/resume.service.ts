@@ -9,7 +9,7 @@ export class ResumeService {
     constructor(@InjectModel(Resume.name) private readonly resumeModel: Model<ResumeDocument>) {}
 
     async getResume(sectionID: string) {
-        return this.resumeModel.find({ section: sectionID }).exec();
+        return this.resumeModel.findOne({ section: sectionID }).exec();
     }
 
     async createResume(newData: ResumeDocument) {

@@ -6,12 +6,9 @@ import { ChatDocument } from './chat.schema';
 export class ChatController {
     constructor(private readonly chatService: ChatService) {}
 
-    @Get(':sectionID')
-    async getChat(
-        @Param('sectionID') sectionID: string,
-        @Query('pagination') pagination: { page: number; limit: number },
-    ) {
-        return this.chatService.getChat(sectionID, pagination);
+    @Get(':section_id')
+    async getChat(@Param('section_id') section_id: string) {
+        return this.chatService.getChat(section_id);
     }
 
     @Post()
@@ -19,8 +16,8 @@ export class ChatController {
         return this.chatService.createChat(newData);
     }
 
-    @Put(':chatID')
-    async updateChat(@Param('chatID') chatID: string, @Body() newData: ChatDocument) {
-        return this.chatService.updateChat(chatID, newData);
+    @Put(':chat_id')
+    async updateChat(@Param('chat_id') chat_id: string, @Body() newData: ChatDocument) {
+        return this.chatService.updateChat(chat_id, newData);
     }
 }
