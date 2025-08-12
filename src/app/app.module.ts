@@ -19,6 +19,7 @@ import { ChunkModule } from "src/chunk/chunk.module";
 import { PageModule } from "src/page/page.module";
 import { ResumeModule } from "src/resume/resume.module";
 import { AiModule } from "src/ai/ai.module";
+import { AwsModule } from "src/aws/aws.module";
 
 @Module({
     imports: [
@@ -40,6 +41,7 @@ import { AiModule } from "src/ai/ai.module";
         PageModule,
         ResumeModule,
         AiModule,
+        AwsModule,
         PassportModule.register({ session: true })
     ],
     controllers: [AppController],
