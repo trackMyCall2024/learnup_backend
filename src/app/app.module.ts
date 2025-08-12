@@ -18,6 +18,7 @@ import { ChatModule } from "src/chat/chat.module";
 import { ChunkModule } from "src/chunk/chunk.module";
 import { PageModule } from "src/page/page.module";
 import { ResumeModule } from "src/resume/resume.module";
+import { AiModule } from "src/ai/ai.module";
 
 @Module({
     imports: [
@@ -38,6 +39,7 @@ import { ResumeModule } from "src/resume/resume.module";
         ChunkModule,
         PageModule,
         ResumeModule,
+        AiModule,
         PassportModule.register({ session: true })
     ],
     controllers: [AppController],

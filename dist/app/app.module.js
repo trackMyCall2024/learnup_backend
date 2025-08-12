@@ -27,6 +27,7 @@ const chat_module_1 = require("../chat/chat.module");
 const chunk_module_1 = require("../chunk/chunk.module");
 const page_module_1 = require("../page/page.module");
 const resume_module_1 = require("../resume/resume.module");
+const ai_module_1 = require("../ai/ai.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -50,6 +51,7 @@ exports.AppModule = AppModule = __decorate([
             chunk_module_1.ChunkModule,
             page_module_1.PageModule,
             resume_module_1.ResumeModule,
+            ai_module_1.AiModule,
             passport_1.PassportModule.register({ session: true })
         ],
         controllers: [app_controller_1.AppController],

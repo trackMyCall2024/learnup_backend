@@ -1,49 +1,24 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AiService } from './ai.service';
-// import { SectionService } from 'src/section/section.service';
 
 @Controller('ai')
 export class AiController {
-    // constructor(
-    //     private readonly aiService: AiService,
-    //     private readonly sectionService: SectionService,
-    // ) {}
+    constructor(
+        private readonly aiService: AiService,
+    ) {}
 
+    @Post('insert-section-content')
+    async insertSectionContent(@Body() body: { unstructuredCourse: string[], isFirstPage: boolean }) {
+        const structuredPages = await this.aiService.getStructuredCourse(body.unstructuredCourse, body.isFirstPage);
 
-    // private maxWords = 500;
+        console.log('structuredPages', structuredPages);
 
-    // @Post('insert-section-content')
-    // async insertSectionContent(sectionId: string, unstructuredCourse: string[]) {
-    //     const structuredPages = await this.aiService.getStructuredPages(unstructuredCourse);
+        return structuredPages;
+    }
 
-    //     for (const page of structuredPages) {
-    //         await this.sectionService.insertPage(sectionId, page);
-    //     }
-
-    //     const pages = await this.sectionService.getPages(sectionId);
-
-    //     for (const page of pages) {
-    //         const chunks = await this.aiService.generateChunks(page.data, this.maxWords);
-
-    //         const preparedChunks = await Promise.all(
-    //             chunks.map(async (chunk: string, i: number) => {
-    //                 const embedding = await this.aiService.getEmbedding(chunk);
-    //                 const start = i + 1 * this.maxWords;
-    //                 const end = start + this.maxWords;
-    
-    //                 return {
-    //                     section: sectionId,
-    //                     index: i,
-    //                     text: chunk,
-    //                     embedding,
-    //                     position: { start, end },
-    //                 };
-    //             }),
-    //         );
-
-    //         //await this.sectionService.insertChunks(sectionId, preparedChunks);
-    //     }
-
-    //     return { message: 'Cours de section inséré avec embeddings' };
-    // }
+    @Get('test-deepseek')
+    async testDeepseek() {
+        const response = await this.aiService.createChat('Dis-moi bonjour en 3 façons différentes.');
+        return response.choices[0].message.content;
+    }
 }
