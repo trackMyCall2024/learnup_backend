@@ -8,6 +8,7 @@ export class NoteController {
 
     @Get(':section_id')
     async getNote(@Param('section_id') section_id: string) {
+        console.log('@@getNote - section_id', section_id);
         const note = await this.noteService.getNote(section_id);
         console.log('note', note);
         return note;

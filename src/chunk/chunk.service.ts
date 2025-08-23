@@ -11,9 +11,18 @@ export class ChunkService {
         return this.chunkModel.find({ page: pageID }).exec();
     }
 
-    async createChunk(newData: ChunkDocument) {
-        const chunk = new this.chunkModel(newData);
-        return chunk.save();
+    async createChunks(chunkPage: string, chunkSection: string, chunkData: string[]) {
+        for (let i = 0; i < chunkData.length; i++) {
+            const chunk = chunkData[i];
+            await this.chunkModel.create([{
+                page: chunkPage,
+                data: chunk,
+                index: i,
+                embedding: [],
+                section: chunkSection,
+                },
+            ]);
+        }
     }
 
     async deleteChunk(chunkID: string) {

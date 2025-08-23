@@ -28,7 +28,7 @@ const chunk_module_1 = require("../chunk/chunk.module");
 const page_module_1 = require("../page/page.module");
 const resume_module_1 = require("../resume/resume.module");
 const ai_module_1 = require("../ai/ai.module");
-const aws_module_1 = require("../aws/aws.module");
+const file_module_1 = require("../file/file.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -53,7 +53,7 @@ exports.AppModule = AppModule = __decorate([
             page_module_1.PageModule,
             resume_module_1.ResumeModule,
             ai_module_1.AiModule,
-            aws_module_1.AwsModule,
+            file_module_1.FileModule,
             passport_1.PassportModule.register({ session: true })
         ],
         controllers: [app_controller_1.AppController],

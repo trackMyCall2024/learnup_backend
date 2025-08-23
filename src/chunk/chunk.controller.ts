@@ -11,11 +11,6 @@ export class ChunkController {
         return this.chunkService.getChunks(page_id);
     }
 
-    @Post()
-    async createChunk(@Body() chunk: ChunkDocument) {
-        return this.chunkService.createChunk(chunk);
-    }
-
     @Put(':chunk_id')
     async updateChunk(@Param('chunk_id') chunk_id: string, @Body() chunk: ChunkDocument) {
         return this.chunkService.updateChunk(chunk_id, chunk);

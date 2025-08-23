@@ -11,6 +11,9 @@ export class Page {
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Directory.name, required: true })
     section: mongoose.Schema.Types.ObjectId;
+
+    @Prop({ type: String, required: true })
+    title: string;
 }
 
 export const PageSchema = SchemaFactory.createForClass(Page);

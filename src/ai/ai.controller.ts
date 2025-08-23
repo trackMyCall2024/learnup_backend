@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { AiService } from './ai.service';
+import { AiService, History } from './ai.service';
 
 @Controller('ai')
 export class AiController {
@@ -8,12 +8,12 @@ export class AiController {
     ) {}
 
     @Post('insert-section-content')
-    async insertSectionContent(@Body() body: { unstructuredCourse: string[], isFirstPage: boolean }) {
-        const structuredPages = await this.aiService.getStructuredCourse(body.unstructuredCourse, body.isFirstPage);
+    async insertSectionContent(@Body() body: { unstructuredCourse: string }) {
+        // const structuredPages = await this.aiService.getStructuredCourse(body.unstructuredCourse, body.history);
 
-        console.log('structuredPages', structuredPages);
+        // console.log('structuredPages', structuredPages);
 
-        return structuredPages;
+        // return structuredPages;
     }
 
     @Get('test-deepseek')

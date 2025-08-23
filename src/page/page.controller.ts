@@ -14,16 +14,19 @@ export class PageController {
     async getPages(@Param('section_id') section_id: string) {
         console.log(`getPages: ${section_id}`);
         const pages = await this.pageService.getPages(section_id);
+        console.log('@@pages', pages);
         const pagesWithChunks = [];
 
         for (const [index, page] of pages.entries()) {
             const chunks = await this.chunkService.getChunks(page._id.toString());
+            console.log('@@chunks', chunks);
             pagesWithChunks.push({
-                title: `Page ${index + 1}`,
+                title: page.title || `Page ${index + 1}`, // Conserver le titre original
                 data: chunks.map((chunk) => chunk.data).join(''),
             });
         }
 
+        console.log('@@pagesWithChunks returned:', pagesWithChunks);
         return pagesWithChunks;
     }
 

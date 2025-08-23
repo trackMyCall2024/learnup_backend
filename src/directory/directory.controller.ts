@@ -28,6 +28,7 @@ export class DirectoryController {
 
     @Post()
     async createDirectory(@Body() newData: DirectoryDocument) {
+        console.log('@@newData', newData);
         return this.directoryService.createDirectory(newData);
     }
 

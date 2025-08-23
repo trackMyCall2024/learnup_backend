@@ -7,19 +7,22 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app/app.module");
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
+const express_1 = __importDefault(require("express"));
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
-        origin: ["http://localhost:3001"],
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-        allowedHeaders: ["Content-Type", "Accept", "Authorization"],
+        origin: ['http://localhost:3001'],
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+        allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
     });
     app.use((0, express_session_1.default)({
-        secret: "a long, randomly-generated string stored in env",
+        secret: 'a long, randomly-generated string stored in env',
         resave: false,
         saveUninitialized: true,
         cookie: { secure: false },
     }));
+    app.use(express_1.default.json({ limit: '50mb' }));
+    app.use(express_1.default.urlencoded({ extended: true, limit: '50mb' }));
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
     await app.listen(3000);
